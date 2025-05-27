@@ -2,26 +2,59 @@ package com.example.printeditor;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.IOException;
 
+public class MainActivity extends AppCompatActivity {
+    private ActivityResultLauncher<Intent> galeriaLauncher;
+    String[] formas={"libre","linea","cuadrado","círculo","rectangulo","Triangulo"};
     private Button botonLimpiar, botonCargar;
     private DrawingView vistaDibujo;
+    private Spinner spinnerForma;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        spinnerForma=findViewById(R.id.spinnerForma);
+        ArrayAdapter<String> adapter= new ArrayAdapter<>(
+                this,
+                        android.R.layout.simple_list_item_single_choice,
+                        formas
+        );
+        adapter.setDropDownViewResource(android.R.layout.);
+        galeriaLauncher=registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData()!= null){
+                        Uri uriImagen= result.getData().getData();
+                        Bitmap bitmap= null;
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriImagen);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        vistaDibujo.setImagenDeFondo(bitmap);
+                    }
+                }
+        );
         vistaDibujo=findViewById(R.id.vitaDibujo);
         botonLimpiar=findViewById(R.id.btnLimpiar);
         botonLimpiar.setOnClickListener(new View.OnClickListener() {
@@ -45,10 +78,11 @@ public class MainActivity extends AppCompatActivity {
         });
         //BOTON PARA CARGAR IMAGENES
         botonCargar=findViewById(R.id.btnCargar);
+        //para abrir galeria
         botonCargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                    abrirGaleria();
             }
         });
     }
@@ -75,11 +109,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //MÉTODO PARA ABRIR LA GALERIA
-    private  void  abrirGaleria(){
-        Intent intent = new Intent().setAction(Intent.ACTION_VIEW); //Define Intent.
-        intent.setType("image/*"); //Define mime type para abrir imagenes
-        startActivity(intent); //Abre galería.
+    private void abrirGaleria() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        galeriaLauncher.launch(intent);
     }
+
+    //CONECTAR SPINNER Y ASIGNAR FORMA
 
 
 }

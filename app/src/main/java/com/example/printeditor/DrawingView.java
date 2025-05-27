@@ -2,6 +2,7 @@ package com.example.printeditor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import android.widget.Switch;
 import androidx.annotation.Nullable;
 
 public class DrawingView extends View {
+        private Bitmap imagenDeFondo;
         private Paint pincel;//para decir cómopintar
         private   static Path trazoActual;//guarda lo que el usuario dibuja
 
@@ -36,7 +38,13 @@ public class DrawingView extends View {
 
     protected  void  onDraw(Canvas canvas){
         super.onDraw(canvas);//llama al metodo original por si hay algo mas que pintar
-        canvas.drawPath(trazoActual,pincel);
+         //Dibuja la imagen de fondo si hay
+        if (imagenDeFondo != null) {
+            canvas.drawBitmap(imagenDeFondo, 0, 0, null);
+        }
+
+        // Dibuja el trazo encima
+        canvas.drawPath(trazoActual, pincel);
 
     }
 
@@ -75,4 +83,12 @@ public class DrawingView extends View {
         pincel.setColor(nuevoColor);
         invalidate();
     }
+
+    public  void  setImagenDeFondo(Bitmap bitmap)
+    {
+        imagenDeFondo=bitmap;
+        invalidate();//redibuja el lienzo
+    }
+
+
 }
