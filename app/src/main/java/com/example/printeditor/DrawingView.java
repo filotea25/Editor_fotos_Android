@@ -18,6 +18,11 @@ public class DrawingView extends View {
         private Bitmap imagenDeFondo;
         private Paint pincel;//para decir cómopintar
         private   static Path trazoActual;//guarda lo que el usuario dibuja
+        private String formaSeleccionada= "libre";
+        private float inicioX, inicioY, finX, finY;
+
+
+
 
     @SuppressLint("ResourceAsColor")
     public DrawingView(Context context, @Nullable AttributeSet attrs) {
@@ -44,8 +49,28 @@ public class DrawingView extends View {
         }
 
         // Dibuja el trazo encima
-        canvas.drawPath(trazoActual, pincel);
+        //canvas.drawPath(trazoActual, pincel);
 
+        //DIBUJA SEGÚN FORMA SELECCIONADA
+        switch (formaSeleccionada){
+            case "libre":
+                canvas.drawPath(trazoActual,pincel);
+                break;
+            case "linea":
+                canvas.drawLine(inicioX,inicioY,finX,finY,pincel);
+                break;
+            case "circulo":
+                canvas.drawOval(inicioX,inicioY,finX,finY,pincel);
+                break;
+            case "cuadrado":
+                canvas.drawCircle(inicioX,inicioY,finX,pincel);
+                break;
+            case "triangulo":
+                canvas.drawRect(inicioX,inicioY,finX,finY,pincel);
+                break;
+                //añadir otras formas
+
+        }
     }
 
     @Override
@@ -55,17 +80,25 @@ public class DrawingView extends View {
 
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                trazoActual.moveTo(x,y);//empieza el trazo desde donde se tocó
+                inicioX=x;
+                inicioY=y;
+                if(formaSeleccionada.equals("libre")){
+                    trazoActual.moveTo(x,y);
+                }
                 break;
 
             case  MotionEvent.ACTION_MOVE:
-                trazoActual.lineTo(x,y);//dibuja una linea hasta la nueva posicion
+                if(formaSeleccionada.equals("libre"));
+                trazoActual.lineTo(x,y);
                 break;
             case MotionEvent.ACTION_UP:
+                finX=x;
+                finY=y;
+                invalidate();//redibuja el lienzo
                 break;
         }
 
-        invalidate();//redibuja la vista con el nuevo trazo
+        //invalidate();//redibuja la vista con el nuevo trazo
         return  true;//Indica que el ebento fue manejado
 
     }
@@ -91,4 +124,7 @@ public class DrawingView extends View {
     }
 
 
+    public  void setFormaSeleccionada(String forma){
+        this.formaSeleccionada=forma;
+    }
 }

@@ -7,14 +7,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!-- Fila 1 -->
     <com.example.printeditor.DrawingView
         android:id="@+id/vitaDibujo"
         android:layout_width="match_parent"
-        android:layout_height="576dp"
+        android:layout_height="526dp"
         android:layout_weight="1"
-        android:background="@color/canvas_background"/>
+        android:background="@color/canvas_background" />
 
-    <!-- Fila 1 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

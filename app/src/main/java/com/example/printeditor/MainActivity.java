@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -21,6 +22,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> galeriaLauncher;
@@ -33,13 +35,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        // CONECTAR SPINNER Y ASIGNAR FORMA
+
+        //  Conecta el Spinner y asigna las opciones
         spinnerForma=findViewById(R.id.spinnerForma);
-        ArrayAdapter<String> adapter= new ArrayAdapter<>(
+        ArrayAdapter<String> adapter =new ArrayAdapter<>(
                 this,
-                        android.R.layout.simple_list_item_single_choice,
-                        formas
+                    android.R.layout.simple_spinner_item,
+                    formas
         );
-        adapter.setDropDownViewResource(android.R.layout.);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinnerForma.setAdapter(adapter);
+
+        //Escucha el cambio de opción y pásaselo al DrawingView
+        spinnerForma.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String formaSeleccionada= formas[position].toLowerCase(Locale.ROOT);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         galeriaLauncher=registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -115,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         galeriaLauncher.launch(intent);
     }
 
-    //CONECTAR SPINNER Y ASIGNAR FORMA
+
 
 
 }
