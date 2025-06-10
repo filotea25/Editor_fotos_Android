@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/opcion_rotar"
+        android:title="@string/rotar_imagen" />
+    <item
+        android:id="@+id/opcion_opacidad"
+        android:title="@string/ajustar_opacidad" />
+    <item
+        android:id="@+id/opcion_Trazo"
+        android:title="Ajustar trazo" />
+    <item
+        android:id="@+id/opcion_redimensionar"
+        android:title="@string/recortar_imagen">
+            <menu>
+                <item
+                    android:id="@+id/opcion_redimensionar_70"
+                    android:title="Escalar 70%" />
+                <item
+                    android:id="@+id/opcion_redimensionar_50"
+                    android:title="Escalar 50%" />
+                <item
+                    android:id="@+id/opcion_redimensionar_25"
+                    android:title="Escalar 25%" />
+                <item
+                    android:id="@+id/original"
+                    android:title="Escalar a original" />
+            </menu>
+    </item>
+
+
+
+
+</menu>

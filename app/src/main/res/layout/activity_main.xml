@@ -34,6 +34,7 @@
             android:text="Cargar"/>
     </LinearLayout>
 
+
     <!-- MENÚ INTERMEDIO -->
     <LinearLayout
         android:id="@+id/menu"
@@ -52,33 +53,61 @@
             android:layout_height="wrap_content"
             android:text="Color" />
 
-        <Button
-            android:id="@+id/btnTrazo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trazo"/>
-
         <Spinner
             android:id="@+id/spinnerForma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="48dp" />
+
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/toolbarUndoRedo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnUndo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Deshacer"
+            android:padding="8dp"
+            android:src="@drawable/ic_undo"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/btnRedo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Rehacer"
+            android:padding="8dp"
+            android:src="@drawable/ic_redo"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
+
 
     <!-- DIBUJO -->
     <com.example.pinteditor.DrawingView
         android:id="@+id/vistaDibujo"
-        android:layout_height="0dp"
+        android:layout_width="286dp"
+        android:layout_height="464dp"
         android:layout_margin="12dp"
         android:background="@color/cardview_shadow_end_color"
         app:layout_constraintBottom_toTopOf="@id/footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menu"
-        tools:ignore="MissingClass"
-        android:layout_width="280dp"/>
+        tools:ignore="MissingClass" />
 
     <!-- BOTONES ABAJO -->
+
     <LinearLayout
         android:id="@+id/footer"
         android:layout_width="0dp"
@@ -89,19 +118,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGuardar"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Guardar" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLimpiar"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Limpiar"/>
+            android:text="Borrar" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
