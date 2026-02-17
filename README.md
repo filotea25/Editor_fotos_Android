@@ -127,7 +127,7 @@ git clone https://github.com/tuusuario/CanvasPro.git
 
 ## 👩‍💻 Autora
 
-**Cristina**  
+**Filotea Mangue Mitogo**  
 Estudiante de Desarrollo de Aplicaciones Multiplataforma  
 
 ---
